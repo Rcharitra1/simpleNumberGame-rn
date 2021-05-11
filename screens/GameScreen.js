@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
+import {Ionicons} from '@expo/vector-icons'
 import { View, StyleSheet, Text, Button, Alert } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
@@ -22,12 +23,20 @@ const GameScreen = (props)=>{
 
 
     const [currentGuess, setCurrentGuess]=useState(getRandomNumber(1, 100, props.userChoice));
-    console.log(currentGuess);
+    // console.log(currentGuess);
     const [noOfGuess, setNoOfGuess]=useState(0);
     const currentLow = useRef(1);
     const currentMax = useRef(100);
+    console.log(Ionicons)
   
+    const {handleGameOver, userChoice}= props;
+    useEffect(()=>{
+        if(currentGuess===userChoice)
+        {
+            handleGameOver(noOfGuess);
+        }
 
+    }, [currentGuess,])
     const handleNextGuess=(direction)=>
     {
         if((direction==='L' && currentGuess<props.userChoice) || (direction=='G' && currentGuess>props.userChoice))
@@ -46,9 +55,6 @@ const GameScreen = (props)=>{
                 currentLow.current=currentGuess
             }
 
-            console.log(currentLow);
-            console.log(currentMax)
-
             const numberGuessed=getRandomNumber(currentLow.current, currentMax.current, currentGuess);
             setCurrentGuess(numberGuessed);
             let totalGuess = noOfGuess;
@@ -59,13 +65,7 @@ const GameScreen = (props)=>{
 
     }
 
-    useEffect(()=>{
-        if(currentGuess===props.userChoice)
-        {
-            props.handleGameOver(noOfGuess);
-        }
-
-    })
+  
 
     return(
         <View style={styles.screen}>

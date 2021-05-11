@@ -1,18 +1,28 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
+
 import Card from '../components/Card';
-import NumberContainer from '../components/NumberContainer';
+
+import defaultStyles from '../constants/default-styles';
+import Colors from '../constants/colors';
+import MainButton from '../components/MainButton'
+
 
 
 const GameOverScreen = props =>{
-    console.log(props.numOfRounds)
     return (
         <View>
             <Card style={styles.container}>
-            <Text style={styles.title}>Game Over</Text>
-            <Text>Opponent took:</Text>
-            <NumberContainer>{props.numbOfRounds}</NumberContainer>
-            <Button title='Play Again' onPress={props.handleRestart}/>
+            <Text style={defaultStyles.titleText}>Game Over</Text>
+
+            <Image 
+            source={require('../assets/images/game-over.png')} 
+            fadeDuration='1000'
+            // source={{uri:'https://en.wikipedia.org/wiki/Summit#/media/File:Iv%C3%A1n_Ernesto_G%C3%B3mez_Carrasco_en_la_cima_del_Monte_Everest.jpg'}}
+            style={styles.imageBox} resizeMode='contain'/>
+            
+            <Text style={defaultStyles.bodyText}>Opponent took<Text style={styles.highlight}> {props.numbOfRounds} </Text>guesses. The number was <Text style={styles.highlight}>{props.userNumber}.</Text></Text>
+            <MainButton onPress={props.handleRestart}>New Game</MainButton>
             </Card>
         </View>);
 
@@ -34,7 +44,14 @@ const styles = StyleSheet.create({
 
         fontSize:20,
         marginVertical:10
-
+    },
+    imageBox:{
+        width:'80%',
+        height:300
+    },
+    highlight:{
+        color:Colors.primary,
+        fontFamily:'open-sans-bold'
     }
 
 });
