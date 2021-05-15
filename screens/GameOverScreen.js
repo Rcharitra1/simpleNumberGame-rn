@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { View, Text, StyleSheet,  Image, Dimensions, ScrollView } from 'react-native';
 
 import Card from '../components/Card';
 
@@ -11,24 +11,24 @@ import MainButton from '../components/MainButton'
 
 const GameOverScreen = props =>{
     return (
+        <ScrollView>
         <View>
             <Card style={styles.container}>
             <Text style={defaultStyles.titleText}>Game Over</Text>
 
             <Image 
             source={require('../assets/images/game-over.png')} 
-            fadeDuration='1000'
+            // fadeDuration='1000'
             // source={{uri:'https://en.wikipedia.org/wiki/Summit#/media/File:Iv%C3%A1n_Ernesto_G%C3%B3mez_Carrasco_en_la_cima_del_Monte_Everest.jpg'}}
             style={styles.imageBox} resizeMode='contain'/>
             
-            <Text style={defaultStyles.bodyText}>Opponent took<Text style={styles.highlight}> {props.numbOfRounds} </Text>guesses. The number was <Text style={styles.highlight}>{props.userNumber}.</Text></Text>
+            <Text style={defaultStyles.bodyText}>Opponent took<Text style={styles.highlight}> {props.numbOfRounds} </Text>guesses. The number was <Text style={styles.highlight}>{props.userNumber}</Text>.</Text>
             <MainButton onPress={props.handleRestart}>New Game</MainButton>
             </Card>
-        </View>);
-
+        </View>
+        </ScrollView>
+       );
 };
-
-
 const styles = StyleSheet.create({
 
     screen:{
@@ -47,13 +47,12 @@ const styles = StyleSheet.create({
     },
     imageBox:{
         width:'80%',
-        height:300
+        height: Dimensions.get('window').height>600? 300: 200
     },
     highlight:{
         color:Colors.primary,
         fontFamily:'open-sans-bold'
     }
-
 });
 
 export default GameOverScreen;
